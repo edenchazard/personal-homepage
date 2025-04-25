@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount, unmount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import Modal from './Modal.svelte';
 
 	let comments: string[] = $state([]);
@@ -18,25 +18,31 @@
 		'No one reads these'
 	];
 
+	function pickCommentFromPool() {
+		if (comments.length >= 5) {
+			const removed = comments.shift();
+			if (removed) {
+				commentPool.push(removed);
+			}
+		}
+
+		const randomCommentIndex = Math.floor(Math.random() * commentPool.length);
+		comments.push(commentPool[randomCommentIndex]);
+		commentPool.splice(randomCommentIndex, 1);
+	}
+
 	onMount(() => {
+		pickCommentFromPool();
+
 		interval = setInterval(
 			() => {
-				if (comments.length >= 5) {
-					const removed = comments.shift();
-					if (removed) {
-						commentPool.push(removed);
-					}
-				}
-
-				const randomCommentIndex = Math.floor(Math.random() * commentPool.length);
-				comments.push(commentPool[randomCommentIndex]);
-				commentPool.splice(randomCommentIndex, 1);
+				pickCommentFromPool();
 			},
 			Math.floor(Math.random() * 2000) + 1000
 		);
 	});
 
-	unmount(() => {
+	onDestroy(() => {
 		clearInterval(interval);
 	});
 </script>
