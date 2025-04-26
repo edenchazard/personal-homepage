@@ -43,6 +43,8 @@
 		"vitest": "^3.0.0"
 	},
 	"dependencies": {
-		"@sveltejs/adapter-static": "^3.0.8"
+		"@jsrob/svelte-portal": "^0.2.1",
+		"@sveltejs/adapter-static": "^3.0.8",
+		"svelte-portal": "^2.2.1"
 	}
 }
