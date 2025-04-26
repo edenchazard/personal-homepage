@@ -4,6 +4,7 @@
 
 	let comments: string[] = $state([]);
 	let interval = $state(0);
+	let commentsElement: HTMLUListElement | undefined;
 
 	const commentPool = [
 		'He really knows what a CSS is!',
@@ -29,17 +30,16 @@
 		const randomCommentIndex = Math.floor(Math.random() * commentPool.length);
 		comments.push(commentPool[randomCommentIndex]);
 		commentPool.splice(randomCommentIndex, 1);
+		commentsElement?.scrollTo({
+			top: commentsElement.scrollHeight,
+			behavior: 'smooth'
+		});
 	}
 
 	onMount(() => {
 		pickCommentFromPool();
 
-		interval = setInterval(
-			() => {
-				pickCommentFromPool();
-			},
-			Math.floor(Math.random() * 2000) + 1000
-		);
+		interval = setInterval(pickCommentFromPool, Math.floor(Math.random() * 2000) + 1000);
 	});
 
 	onDestroy(() => {
@@ -58,13 +58,19 @@
 	<div class="flex flex-1 pt-4 pr-8 pl-4">
 		<div class="grid w-full grid-cols-[1.5fr_1fr] gap-4">
 			<div class="h-40 w-full border border-rose-200"></div>
-			<div class="row-span-2 flex flex-col border border-rose-200">
+
+			<div
+				class="order-3 col-span-full row-span-2 flex flex-col border border-rose-200 md:order-none md:col-span-1"
+			>
 				<p class="bg-white py-0.5 pl-4 text-center">
 					<span class="inline-block w-full bg-purple-100 p-0.5 text-xs font-bold text-indigo-700">
 						Comments...
 					</span>
 				</p>
-				<div class="flex-1 overflow-auto bg-purple-100 p-3 text-sm text-indigo-700">
+				<div
+					class="flex-1 overflow-hidden bg-purple-100 p-3 text-sm text-indigo-700"
+					bind:this={commentsElement}
+				>
 					<ul class="max-h-28 list-inside list-[square] space-y-2">
 						{#each comments as comment}
 							<li>{comment}</li>
@@ -85,7 +91,8 @@
 					</div>
 				</div>
 			</div>
-			<div>
+
+			<div class="order-2 col-span-full md:order-none md:col-span-1">
 				<p class="text-lg font-bold text-purple-800">Hi, I'm Eden!</p>
 				<ul class="mt-2 flex gap-2 text-sm">
 					<li>100 likes</li>

@@ -1,6 +1,9 @@
 @import 'tailwindcss';
 
 @layer base {
+	dialog {
+		margin: auto;
+	}
 	button:focus {
 		@apply outline-1 outline-blue-950 outline-dotted;
 	}
