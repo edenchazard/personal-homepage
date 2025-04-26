@@ -2,19 +2,20 @@
 	import { onMount } from 'svelte';
 	import TaskbarButton from './TaskbarButton.svelte';
 
-	let interval = $state(0);
+	let interval = $state<ReturnType<typeof setInterval>>();
 	let time = $state('00:00:00');
 
 	onMount(() => {
-		clearInterval(interval);
-		interval = setInterval(() => {
-			time = new Date().toLocaleTimeString(undefined, {
-				hour: '2-digit',
-				minute: '2-digit',
-				second: '2-digit'
-			});
-		}, 1000);
+		tickTime();
+		interval = setInterval(tickTime, 1000);
 	});
+
+	function tickTime() {
+		time = new Date().toLocaleTimeString(undefined, {
+			hour: '2-digit',
+			minute: '2-digit'
+		});
+	}
 </script>
 
 <div

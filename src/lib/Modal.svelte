@@ -11,7 +11,6 @@
 
 	function closeModal() {
 		modalElement?.close?.();
-
 		close?.();
 	}
 </script>
