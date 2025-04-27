@@ -33,7 +33,6 @@
 		<div class="flex flex-col md:flex-row">
 			<TaskbarButton href="/" title="Edenet Explorer" />
 			<TaskbarButton href="/portfolio" title="Flexplorer" />
-			<TaskbarButton href="/" title="My Nomputer" />
 		</div>
 	</div>
 

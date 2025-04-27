@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 	import { Portal } from '@jsrob/svelte-portal';
+	import { base } from '$app/paths';
 
 	let { children, title, close } = $props<{
 		children?: Snippet;
@@ -9,11 +10,6 @@
 	}>();
 
 	let modalElement: HTMLDialogElement | undefined;
-
-	function closeModal() {
-		modalElement?.close?.();
-		close?.();
-	}
 </script>
 
 <Portal target="#desktop">
@@ -31,10 +27,10 @@
 				>
 					<span class="taskbar-button-icon"> </span>
 					<span class="flex-1">{title}</span>
-					<button
-						type="button"
+					<a
+						href={`${base}/desktop`}
 						class="box-content size-4 border border-dotted text-center"
-						onclick={() => closeModal()}>x</button
+						onclick={() => close?.()}>x</a
 					>
 				</div>
 			</div>
