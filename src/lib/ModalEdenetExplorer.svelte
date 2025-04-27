@@ -4,7 +4,7 @@
 
 	let comments: string[] = $state([]);
 	let interval = $state(0);
-	let commentsElement: HTMLUListElement | undefined;
+	let commentsContainerElement: HTMLDivElement | undefined;
 
 	const commentPool = [
 		'He really knows what a CSS is!',
@@ -19,6 +19,14 @@
 		'No one reads these'
 	];
 
+	$effect(() => {
+		comments;
+		commentsContainerElement?.scrollTo({
+			top: commentsContainerElement.scrollHeight,
+			behavior: 'smooth'
+		});
+	});
+
 	function pickCommentFromPool() {
 		if (comments.length >= 5) {
 			const removed = comments.shift();
@@ -28,17 +36,12 @@
 		}
 
 		const randomCommentIndex = Math.floor(Math.random() * commentPool.length);
-		comments.push(commentPool[randomCommentIndex]);
+		comments = [...comments, commentPool[randomCommentIndex]];
 		commentPool.splice(randomCommentIndex, 1);
-		commentsElement?.scrollTo({
-			top: commentsElement.scrollHeight,
-			behavior: 'smooth'
-		});
 	}
 
 	onMount(() => {
 		pickCommentFromPool();
-
 		interval = setInterval(pickCommentFromPool, Math.floor(Math.random() * 2000) + 1000);
 	});
 
@@ -69,7 +72,7 @@
 				</p>
 				<div
 					class="flex-1 overflow-hidden bg-purple-100 p-3 text-sm text-indigo-700"
-					bind:this={commentsElement}
+					bind:this={commentsContainerElement}
 				>
 					<ul class="max-h-28 list-inside list-[square] space-y-2">
 						{#each comments as comment}
