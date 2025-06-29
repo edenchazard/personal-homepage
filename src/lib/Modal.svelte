@@ -3,10 +3,11 @@
 	import { Portal } from '@jsrob/svelte-portal';
 	import { base } from '$app/paths';
 
-	let { children, title, close } = $props<{
+	let { icon, children, title, close } = $props<{
 		children?: Snippet;
 		title: string;
 		close?: () => void;
+		icon: Snippet;
 	}>();
 
 	let modalElement: HTMLDialogElement | undefined;
@@ -25,7 +26,7 @@
 				<div
 					class="flex w-full items-center gap-1 overflow-hidden rounded-sm border border-purple-950 bg-fuchsia-300 pl-1 text-xs *:py-1"
 				>
-					<span class="taskbar-button-icon"> </span>
+					{@render icon()}
 					<span class="flex-1">{title}</span>
 					<a
 						href={`${base}/desktop`}

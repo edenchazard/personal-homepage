@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import TaskbarButton from './TaskbarButton.svelte';
+	import Money from 'phosphor-svelte/lib/Money';
 
 	let interval = $state<ReturnType<typeof setInterval>>();
 	let time = $state('00:00:00');
@@ -21,7 +22,11 @@
 <div
 	class="flex flex-col gap-2 border-t-2 border-purple-100 bg-purple-200 p-1 text-xs md:flex-row md:items-center"
 >
-	<button type="button" class="start-button h-7 uppercase md:w-20">Start</button>
+	<button
+		type="button"
+		class="start-button h-7 cursor-pointer border-r-2 border-b px-4 uppercase md:w-20"
+		>Start
+	</button>
 
 	<div
 		class="flex flex-1 flex-col divide-x-2 divide-black text-indigo-700 *:flex *:gap-[inherit] md:flex-row md:items-center md:*:px-4"

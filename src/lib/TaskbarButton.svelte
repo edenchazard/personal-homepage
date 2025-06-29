@@ -1,24 +1,26 @@
 <script lang="ts">
 	import { base } from '$app/paths';
 	import { page } from '$app/state';
+	import type { Snippet } from 'svelte';
 
-	let { href, title } = $props<{
+	let { href, title, icon } = $props<{
 		href: string;
 		title?: string;
+		icon?: Snippet;
 	}>();
 </script>
 
 <a
 	href={`${base}${href}`}
 	class={[
-		'taskbar-button box-content h-6 px-2',
+		'box-content flex h-6 items-center gap-2 border-t border-l-2 px-2 font-bold',
 		{
-			selected: page.url.pathname === href,
+			'bg-gray-300/70': page.url.pathname === href,
 			'!border-none': !title
 		}
 	]}
 >
-	<span class="taskbar-button-icon"></span>
+	{@render icon?.()}
 	{#if title}
 		<span>{title}</span>
 	{/if}

@@ -8,23 +8,9 @@
 
 @layer components {
 	.start-button {
-		@apply cursor-pointer border-r-2 border-b px-4;
-
 		&[aria-pressed],
 		&:active {
 			@apply border-t-2 border-r-2 border-b-0 border-l border-purple-950 border-r-white;
-		}
-	}
-
-	.button {
-		@apply flex items-center gap-2;
-	}
-
-	.taskbar-button {
-		@apply flex items-center gap-2 border-t border-l-2 font-bold;
-
-		&.selected {
-			@apply bg-gray-300/70;
 		}
 	}
 
