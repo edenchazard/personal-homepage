@@ -3,26 +3,40 @@
 	import Modal from './Modal.svelte';
 	import WindowsLogo from 'phosphor-svelte/lib/WindowsLogo';
 
+	const generator = commentPoolGenerator();
 	let comments: string[] = $state([]);
 	let commentsContainerElement: HTMLDivElement | undefined;
+	let timeout: ReturnType<typeof setTimeout> | undefined;
 
 	$effect(() => {
 		comments;
-		commentsContainerElement?.scrollTo({
+
+		if (!commentsContainerElement) {
+			return;
+		}
+
+		commentsContainerElement.scrollTo({
 			top: commentsContainerElement.scrollHeight,
 			behavior: 'smooth'
 		});
 	});
 
-	onMount(() => {
-		const generator = commentPool();
-		(function createTimeoutInterval() {
-			comments = [...comments, generator.next().value];
-			setTimeout(createTimeoutInterval, Math.floor(Math.random() * 2000) + 1000);
-		})();
-	});
+	onMount(beginCommentRotation);
 
-	function* commentPool(): Generator<string> {
+	function handleVisibilityChange() {
+		if (document.visibilityState === 'visible') {
+			beginCommentRotation();
+		} else {
+			clearTimeout(timeout);
+		}
+	}
+
+	function beginCommentRotation() {
+		comments = [...comments, generator.next().value];
+		timeout = setTimeout(beginCommentRotation, Math.floor(Math.random() * 2000) + 1000);
+	}
+
+	function* commentPoolGenerator(): Generator<string> {
 		const commentDictionary = [
 			'He really knows what a CSS is!',
 			'weird name',
@@ -47,10 +61,13 @@
 				// Reset when empty, but make sure that the next generated comment is not the same as the current one
 				pool.push(...commentDictionary.filter((c) => c !== comment));
 			}
+			console.log('pick');
 			yield comment;
 		}
 	}
 </script>
+
+<svelte:document onvisibilitychange={handleVisibilityChange} />
 
 <Modal title="Edenet Explorer">
 	{#snippet icon()}
