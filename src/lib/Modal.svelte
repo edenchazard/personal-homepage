@@ -17,10 +17,10 @@
 	<dialog
 		open
 		bind:this={modalElement}
-		class="absolute inset-8 max-h-[28rem] w-full max-w-2xl md:inset-20"
+		class="absolute top-0 bottom-0 size-full overflow-hidden md:m-auto md:max-h-[28rem] md:max-w-2xl md:rounded-md md:border md:bg-white md:shadow-lg"
 	>
 		<div
-			class="flex w-full flex-1 flex-col gap-0.5 rounded-sm border border-purple-950 bg-cyan-200 p-1 shadow-[3px_4px_3px_0px_#42006e]"
+			class="flex h-full w-full flex-1 flex-col gap-0.5 rounded-sm border border-purple-950 bg-cyan-200 p-1 shadow-[3px_4px_3px_0px_#42006e]"
 		>
 			<header class="inset-shadow flex gap-4 font-bold text-indigo-700">
 				<div

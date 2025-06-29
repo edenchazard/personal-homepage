@@ -10,11 +10,8 @@
 <IconContext values={{ size: 30, mirrored: false, weight: 'light' }}>
 	<div class="flex flex-1">
 		<div class="flex size-full flex-1 flex-col items-center justify-center">
-			<div
-				id="desktop"
-				class="relative flex h-full max-h-[50rem] w-full max-w-4xl flex-col bg-blue-100"
-			>
-				<div class="relative h-full p-6">
+			<div class="relative flex w-full max-w-4xl flex-1 flex-col bg-blue-100">
+				<div id="desktop" class="relative h-full w-full flex-1 overflow-hidden p-6">
 					<!-- Dragcave group -->
 					<div class="relative inline-flex rounded-md bg-white/40">
 						<div class="absolute -top-2 right-0 left-0 text-center text-xs">
@@ -41,7 +38,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="flex flex-1">
+				<div class="flex">
 					{@render children()}
 				</div>
 				<Taskbar />
