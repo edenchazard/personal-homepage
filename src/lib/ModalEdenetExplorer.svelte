@@ -1,23 +1,10 @@
 <script lang="ts">
-	import { onDestroy, onMount } from 'svelte';
+	import { onMount } from 'svelte';
 	import Modal from './Modal.svelte';
+	import WindowsLogo from 'phosphor-svelte/lib/WindowsLogo';
 
 	let comments: string[] = $state([]);
-	let interval = $state(0);
 	let commentsContainerElement: HTMLDivElement | undefined;
-
-	const commentPool = [
-		'He really knows what a CSS is!',
-		'weird name',
-		'stop swearing guys',
-		'lorem ipsum',
-		'HELLO WORLD!!!!',
-		'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris.',
-		'Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor.',
-		'Praesent et diam eget libero egestas mattis sit amet vitae augue. Donec sodales sagittis magna.',
-		'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.',
-		'No one reads these'
-	];
 
 	$effect(() => {
 		comments;
@@ -27,30 +14,48 @@
 		});
 	});
 
-	function pickCommentFromPool() {
-		if (comments.length >= 5) {
-			const removed = comments.shift();
-			if (removed) {
-				commentPool.push(removed);
-			}
-		}
-
-		const randomCommentIndex = Math.floor(Math.random() * commentPool.length);
-		comments = [...comments, commentPool[randomCommentIndex]];
-		commentPool.splice(randomCommentIndex, 1);
-	}
-
 	onMount(() => {
-		pickCommentFromPool();
-		interval = setInterval(pickCommentFromPool, Math.floor(Math.random() * 2000) + 1000);
+		const generator = commentPool();
+		(function createTimeoutInterval() {
+			comments = [...comments, generator.next().value];
+			setTimeout(createTimeoutInterval, Math.floor(Math.random() * 2000) + 1000);
+		})();
 	});
 
-	onDestroy(() => {
-		clearInterval(interval);
-	});
+	function* commentPool(): Generator<string> {
+		const commentDictionary = [
+			'He really knows what a CSS is!',
+			'weird name',
+			'stop swearing guys',
+			'lorem ipsum',
+			'HELLO WORLD!!!!',
+			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris.',
+			'Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor.',
+			'Praesent et diam eget libero egestas mattis sit amet vitae augue. Donec sodales sagittis magna.',
+			'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.',
+			'No one reads these'
+		];
+
+		const pool = [...commentDictionary];
+
+		while (true) {
+			const randomCommentIndex = Math.floor(Math.random() * pool.length);
+			const comment = pool[randomCommentIndex];
+			pool.splice(randomCommentIndex, 1);
+
+			if (!pool.length) {
+				// Reset when empty, but make sure that the next generated comment is not the same as the current one
+				pool.push(...commentDictionary.filter((c) => c !== comment));
+			}
+			yield comment;
+		}
+	}
 </script>
 
 <Modal title="Edenet Explorer">
+	{#snippet icon()}
+		<WindowsLogo />
+	{/snippet}
 	<div class="flex items-center gap-2 rounded-sm bg-white p-1 text-red-500">
 		&#11208; <span class="leading-3">Live</span>
 		<div class="flex-1 self-stretch border border-rose-100 text-right">
