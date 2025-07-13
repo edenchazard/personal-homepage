@@ -8,8 +8,8 @@
 </script>
 
 <IconContext values={{ size: 30, mirrored: false, weight: 'light' }}>
-	<div class="flex flex-1">
-		<div class="flex size-full flex-1 flex-col items-center justify-center">
+	<div class="flex flex-1 items-center">
+		<div class="flex h-full max-h-[720px] flex-1 flex-col items-center">
 			<div class="relative flex w-full max-w-4xl flex-1 flex-col bg-blue-100">
 				<div id="desktop" class="relative h-full w-full flex-1 overflow-hidden p-6">
 					<!-- Dragcave group -->

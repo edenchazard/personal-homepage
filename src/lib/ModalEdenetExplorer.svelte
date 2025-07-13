@@ -61,7 +61,6 @@
 				// Reset when empty, but make sure that the next generated comment is not the same as the current one
 				pool.push(...commentDictionary.filter((c) => c !== comment));
 			}
-			console.log('pick');
 			yield comment;
 		}
 	}
@@ -82,7 +81,7 @@
 
 	<div class="flex flex-1 pt-4 pr-8 pl-4">
 		<div class="grid w-full grid-cols-[1.5fr_1fr] gap-4">
-			<div class="h-40 w-full border border-rose-200"></div>
+			<div class="col-span-2 h-40 w-full border border-rose-200 md:col-span-1"></div>
 
 			<div
 				class="order-3 col-span-full row-span-2 flex flex-col border border-rose-200 md:order-none md:col-span-1"
